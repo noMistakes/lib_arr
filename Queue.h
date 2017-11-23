@@ -1,15 +1,17 @@
 #pragma once
+#include <iostream>
 using namespace std;
 
 template<class T>
-struct Node
+struct Node_queue
 {
 	T data;
-	Node<T> *next;
-	Node(T _data)
+	Node_queue<T> *next;
+	Node_queue(T _data)
 	{
 		data = _data;
 		next = NULL;
+
 	}
 };
 	template<class T>
@@ -17,16 +19,16 @@ struct Node
 	{
 	private:
 		int count;
-		Node<T> *head;
-		Node<T> *tail;
+		Node_queue<T> *head;
+		Node_queue<T> *tail;
 	public:
 		Queue();
-		void puchBack(T _data);
-		void print(char *end_);
+		void push(T _data);
+		void print();
 		int getSize();
-		T pop();
-		Node<T> * getHead();
-		Node<T> * getTail();
+		void pop();
+		Node_queue<T> * getHead();
+		Node_queue<T> * getTail();
 		void clear();
 		void extend(Queue *queue2);
 		~Queue();

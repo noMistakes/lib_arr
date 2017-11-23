@@ -22,7 +22,7 @@ void List<T>::print() const {
 		cout << "List Is Empty" << endl;
 		return;
 	}
-	Node<T> *ptr = head;
+	Node_list<T> *ptr = head;
 	while (ptr != NULL) {
 		cout << ptr->data;
 		ptr = ptr->next;
@@ -35,7 +35,7 @@ int List<T>::size() const {
 	if (head == NULL) {
 		return 0;
 	}
-	Node<T> *ptr = head;
+	Node_list<T> *ptr = head;
 	while (ptr != NULL) {
 		number++;
 		ptr = ptr->next;
@@ -44,8 +44,8 @@ int List<T>::size() const {
 }
 template<class T>
 void List<T>::replace(int i, int j) {
-	Node<T> *ptr1 = head;
-	Node<T> *ptr2 = head;
+	Node_list<T> *ptr1 = head;
+	Node_list<T> *ptr2 = head;
 	while (i != 0) {
 		if (ptr1 == NULL) {
 			return;
@@ -65,8 +65,8 @@ void List<T>::replace(int i, int j) {
 template<class T>
 void List<T>::sort() {
 	int swapped, i;
-	 Node<T> *ptr1;
-	 Node<T> *lptr = NULL;
+	 Node_list<T> *ptr1;
+	 Node_list<T> *lptr = NULL;
 
 	if (ptr1 == NULL)
 		return;
@@ -97,8 +97,8 @@ void List<T>::pop() {
 		return;
 	}
 
-	Node<T> *ptr = head;
-	Node<T> *temp = tail;
+	Node_list<T> *ptr = head;
+	Node_list<T> *temp = tail;
 
 	while (ptr != tail) {
 		temp = ptr;
@@ -111,13 +111,14 @@ void List<T>::pop() {
 }
 
 template<class T>
-void List<T>::pushBack(T _data_) {
+void List<T>::pushBack(T elem) {
 	if (head != NULL) {
-		tail->next = new Node<T>(_data_);
+
+		tail->next = new Node_list<T>(elem);
 		tail = tail->next;
 		count++;
 	} else {
-		head = new Node<T>(_data_);
+		head = new Node_list<T>(elem);
 		tail = head;
 		count++;
 	}
@@ -127,7 +128,7 @@ template<class T>
 void List<T>::clear() {
 	if (head == NULL)
 		return;
-	Node<T> *ptr = head;
+	Node_list<T> *ptr = head;
 	while (ptr != NULL) {
 		head = head->next;
 		delete ptr;
@@ -136,20 +137,20 @@ void List<T>::clear() {
 	head = NULL;
 	tail = NULL;
 }
-template<class Type>
-void List<Type>::insert(Type elem, int i) {
+template<class T>
+void List<T>::insert(T elem, int i) {
 	if (i >= count)
 		pushBack(elem);
 	else {
 		if (head != NULL) {
 
-			Node<Type> *ptr = head;
-			for (int j = 0; j < i; j++)
+			Node_list<T> *ptr = head;
+			for (int j = 0; j < i-1; j++)
 				ptr = ptr->next;
 
-			Node<Type> *temp = ptr->next;
+			Node_list<T> *temp = ptr->next;
 
-			ptr->next = new Node<Type>(elem);
+			ptr->next = new Node_list<T>(elem);
 			ptr->next->next = temp;
 			count++;
 		} else {
@@ -159,3 +160,6 @@ void List<Type>::insert(Type elem, int i) {
 
 }
 
+template<class T>
+List<T>::~List() {
+}

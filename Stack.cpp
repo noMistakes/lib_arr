@@ -3,7 +3,9 @@
 using namespace std;
 template<typename Type>
 Stack<Type>::Stack() {
-
+	head = NULL;
+	tail = NULL;
+	count = 0;
 }
 
 template<typename Type>
@@ -13,18 +15,18 @@ Stack<Type>::~Stack() {
 template<class T>
 void Stack<T>::pushBack(T _data_) {
 	if (head != NULL) {
-		tail->next = new Node<T>(_data_);
+		tail->next = new Node_stack<T>(_data_);
 		tail = tail->next;
 		count++;
 	} else {
-		head = new Node<T>(_data_);
+		head = new Node_stack<T>(_data_);
 		tail = head;
 		count++;
 	}
 }
 
 template<typename T>
-T Stack<T>::pop() {
+void Stack<T>::pop() {
 	if (head == NULL)
 		return;
 	if (tail == head) {
@@ -35,8 +37,8 @@ T Stack<T>::pop() {
 		return;
 	}
 
-	Node<T> *ptr = head;
-	Node<T> *temp = tail;
+	Node_stack<T> *ptr = head;
+	Node_stack<T> *temp = tail;
 
 	while (ptr != tail) {
 		temp = ptr;
@@ -55,7 +57,7 @@ void Stack<T>::print() {
 		cout << "Stack Is Empty" << endl;
 		return;
 	}
-	Node<T> *ptr = head;
+	Node_stack<T> *ptr = head;
 	while (ptr != NULL) {
 		cout << ptr->data;
 		ptr = ptr->next;
@@ -69,7 +71,7 @@ int Stack<T>::size() const {
 	if (head == NULL) {
 		return 0;
 	}
-	Node<T> *ptr = head;
+	Node_stack<T> *ptr = head;
 	while (ptr != NULL) {
 		number++;
 		ptr = ptr->next;

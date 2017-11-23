@@ -25,7 +25,6 @@ private:
 	DoublyNode<T> *tail;
 public:
 	DoublyList();
-	pushBack(T _data);
 	void pushBack(T _data);
 	void print(char *end_, char type)const;
 	int size();

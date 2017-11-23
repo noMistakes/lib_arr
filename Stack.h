@@ -4,27 +4,32 @@
  *  Created on: Nov 10, 2017
  *      Author: vitalik
  */
-
+#include <iostream>
 #ifndef STACK_H_
 #define STACK_H_
 template<typename T>
-struct Node {
+struct Node_stack {
 	T data;
-	Node *next, *prev;
+	Node_stack *next, *prev;
+	Node_stack(T _data)
+	{
+		data = _data;
+		next = NULL;
+	}
 
 };
 template<typename T>
 class Stack {
 private:
-	Node<T> *head;
-	Node<T> *tail;
+	Node_stack<T> *head;
+	Node_stack<T> *tail;
 	int count;
 public:
 	Stack();
 	~Stack();
 
 	void pushBack(T elem);
-	T pop();
+	void pop();
 	void print();
 	int size() const;
 };
