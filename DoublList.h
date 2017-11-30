@@ -23,14 +23,15 @@ class DoublyList
 private:
 	DoublyNode<T> *head;
 	DoublyNode<T> *tail;
+	int count;
 public:
 	DoublyList();
 	void pushBack(T _data);
-	void print(char *end_, char type)const;
+	void print()const;
 	int size();
 	void replace(int i, int j);
-	void pop(int i);
-	void insert(int i, T elem);
+	void pop();
+	void insert( T elem,int i);
 	DoublyNode<T> * getValue(int i);
 	void reverse();
 	void clear();

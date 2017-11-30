@@ -1,111 +1,59 @@
-#pragma once
 #include "Queue.h"
 #include <iostream>
+#include <cassert>
 using namespace std;
 
-template<class T>
-Queue<T>::Queue() {
-	head = NULL;
-	tail = NULL;
-	count = 0;
-}
-
-template<class T>
-void Queue<T>::push(T _data) {
-	if (head != NULL) {
-		tail->next = new Node_queue<T>(_data);
-		tail = tail->next;
-	} else {
-		head = new Node_queue<T>(_data);
-		tail = head;
-	}
-	count++;
-}
-template<class T>
-void Queue<T>::print() {
-	cout << endl;
-	if (head == NULL && count == 0) {
-		cout << "Queue is emply" << endl;
-		return;
-	}
-	Node_queue<T> *ptr = head;
-	while (head != NULL) {
-		cout << head->data ;
-		pop();
-	}
-	cout << endl;
-}
-
-template<class T>
-int Queue<T>::getSize() {
-	return count;
+template<typename T>
+Queue<T>::Queue(size_t n) :
+		size(n > 0 ? n : 0) {
+	ptr = new T[size];
+	begin = 0;
+	end = 0;
+	elCT = 0;
 }
 
 template<typename T>
-void Queue<T>::pop() {
-	if (head == NULL)
-		return ;
-	if (tail == head) {
-		delete head;
-		tail = NULL;
-		head = NULL;
-		count--;
-		return;
+Queue<T>::Queue(const Queue& copy) {
+	if (size != copy.size) {
+		delete[] ptr;
+		size = copy.size;
+		ptr = new T[size];
 	}
+	for (int i = 0; i < size; i++)
+		ptr[i] = copy.ptr[i];
+	end = copy.end;
+	begin = copy.begin;
+	elCT = copy.elCT;
+}
 
-	Node_queue<T> *ptr = head;
-	Node_queue<T> *temp = tail;
+template<typename T>
+void Queue<T>::enqueue(const T el) {
 
-	while (ptr != tail) {
-		temp = ptr;
-		ptr = ptr->next;
+	ptr[end++] = el;
+	if (end == size)
+		end = 0;
+	elCT++;
+}
+
+template<typename T>
+T Queue<T>::dequeue() {
+
+	if (begin == size)
+		(begin = 0);
+	elCT--;
+	size--;
+	return ptr[begin++];
+}
+
+template<typename T>
+void Queue<T>::print() const {
+	for (int i = 0; i < elCT; i++) {
+		cout << " " << ptr[begin + i >= size ? begin + i - size : begin + i];
 	}
-	tail = temp;
-	delete ptr;
-	tail->next = NULL;
-	count--;
+	cout << endl;
+}
+template<typename T>
+int Queue<T>::getsize() {
+	return size;
 }
 
-template<class T>
-Node_queue<T> * Queue<T>::getHead() {
-	return head;
-}
-
-template<class T>
-Node_queue<T> * Queue<T>::getTail() {
-	return tail;
-}
-
-template<class T>
-void Queue<T>::clear() {
-	if (head == NULL)
-		return;
-	Node_queue<T> *ptr = head;
-	while (ptr != NULL) {
-		head = head->next;
-		delete ptr;
-		ptr = head;
-	}
-}
-
-template<class T>
-void Queue<T>::extend(Queue *queue2) {
-	queue2->print();
-	int n = queue2->getSize();
-	for (int i = 0; i < n; i++) {
-		puchBack(queue2->getHead()->data);
-		queue2->pop();
-	}
-}
-
-template<class T>
-Queue<T>::~Queue() {
-	if (head == NULL)
-		return;
-	Node_queue<T> *ptr = head;
-	while (ptr != NULL) {
-		head = head->next;
-		delete ptr;
-		ptr = head;
-	}
-}

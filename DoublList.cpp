@@ -9,7 +9,6 @@ DoublyList<T>::DoublyList() {
 }
 template<class T>
 void DoublyList<T>::pushBack(T _data) {
-	//(*tail).next=new Node(_data);
 	if (head != NULL) {
 		tail->next = new DoublyNode<T>(_data);
 		tail->next->prev = tail;
@@ -20,28 +19,18 @@ void DoublyList<T>::pushBack(T _data) {
 	}
 }
 template<class T>
-void DoublyList<T>::print(char *end_, char type) const {
+void DoublyList<T>::print() const {
 	cout << endl;
 	if (head == NULL) {
-		cout << "List is emply" << endl;
+		cout << "List Is Empty" << endl;
 		return;
 	}
-	if (type == '+') {
-		DoublyNode<T> *ptr = head;
-		while (ptr != NULL) {
-			cout << ptr->data << end_;
-			ptr = ptr->next;
-		}
-		cout << endl;
+	DoublyNode<T> *ptr = head;
+	while (ptr != NULL) {
+		cout << ptr->data;
+		ptr = ptr->next;
 	}
-	if (type == '-') {
-		DoublyNode<T> *ptr = tail;
-		while (ptr != NULL) {
-			cout << ptr->data << end_;
-			ptr = ptr->prev;
-		}
-		cout << endl;
-	}
+	cout << endl;
 }
 template<class T>
 int DoublyList<T>::size() {
@@ -79,44 +68,38 @@ void DoublyList<T>::replace(int i, int j) {
 	swap(ptr1->data, ptr2->data);
 }
 template<class T>
-void DoublyList<T>::pop(int i) {
-	if (i < 0 || i + 1 > size()) {
-		cout << "Error: list index out of range" << endl;
+void DoublyList<T>::pop() {
+	if (head == NULL)
+		return;
+	if (tail == head) {
+		delete head;
+		tail = NULL;
+		head = NULL;
+		count--;
 		return;
 	}
+
 	DoublyNode<T> *ptr = head;
-	while (i > 0) {
-		if (ptr->next == tail) {
-			delete ptr->next;
-			ptr->next = NULL;
-			tail = ptr;
-			return;
-		}
-		i--;
-		if (i == 0) {
-			DoublyNode<T> *ptr1 = ptr->next;
-			ptr->next = ptr->next->next;
-			delete ptr1;
-			return;
-		} else
-			ptr = ptr->next;
+	DoublyNode<T> *temp = tail;
+
+	while (ptr != tail) {
+		temp = ptr;
+		ptr = ptr->next;
 	}
-	if (ptr == head && ptr == tail)
-		clear();
-	else {
-		head = head->next;
-		delete ptr;
-	}
+	tail = temp;
+	delete ptr;
+	tail->next = NULL;
+	count--;
 }
 template<class T>
-void DoublyList<T>::insert(int i, T elem) {
+void DoublyList<T>::insert( T elem,int i) {
 	DoublyNode<T> *ptr = head;
 	if (i > size()) {
 		cout << "Error: list index out of range" << endl;
 		return;
 	}
 	if (i == size()) {
-		puchBack(elem);
+		pushBack(elem);
 		return;
 	}
 	if (i == 0) {
